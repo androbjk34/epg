@@ -1,13 +1,14 @@
-name: Update EPG from goldvod
+name: Update EPG from open-epg.com
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch: {}   # Manuel başlatma
   schedule:
-    - cron: '*/30 * * * *' # her 30 dakikada bir (istediğiniz aralığı değiştirin)
+    - cron: '*/30 * * * *' # Her 30 dakikada bir çalışır
 
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,7 +17,7 @@ jobs:
 
       - name: Fetch remote EPG
         run: |
-          curl -sS "https://goldvod.org/xmltv.php?username=hpgdisco&password=123456" -o tr-epg-new.xml
+          curl -sS "https://www.open-epg.com/generate/lQn8VptSXU.xml" -o tr-epg-new.xml
           if [ ! -s tr-epg-new.xml ]; then
             echo "Downloaded file is empty or fetch failed" >&2
             exit 1
